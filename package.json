@@ -9,9 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106",
-    "next": "15.0.3"
+    "@react-three/drei": "^9.115.0",
+    "@react-three/fiber": "^8.17.10",
+    "glslify-loader": "^2.0.0",
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.16",
+    "next": "14.2.17",
+    "raw-loader": "^4.0.2",
+    "react": "^18",
+    "react-dom": "^18",
+    "three": "^0.170.0"
   },
   "devDependencies": {
     "postcss": "^8",
