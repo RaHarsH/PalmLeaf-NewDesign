@@ -6,7 +6,8 @@ import fragment from '../shaders/fragmentShader.glsl';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
-import Navbar from '@/components/Navbar';
+import AnimatedAboutSection from '@/components/About';
+import MagneticEffect from '@/components/MagneticEffect';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -126,21 +127,21 @@ function Home() {
 
   return (
     <div className="w-full">
-      <Navbar />
-
       <div className="landing w-full h-[200vh]">
         <div className="w-full h-screen sticky top-0 left-0">
-          <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl md:text-6xl whitespace-nowrap font-medium">Discover . Decode . Document</h1>
+          <h1 className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl md:text-6xl whitespace-nowrap font-medium">Discover . Decode . Document</h1>
           <p className="absolute font-semibold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 pointer-events-none text-md md:text-3xl text-center tracking-normal leading-loose">
           A <span className="font-bold font-mono">Digital Archive</span> capturing ancient knowledge through the preservation and transcription of palm leaf manuscripts.          </p>
-          <button className='opacity-0 absolute top-[67%] left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black text-white px-6 py-3 rounded-3xl'>
-            Learn More
-          </button>
+          <MagneticEffect>
+            <button className='opacity-0 absolute top-[67%] left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black text-white px-6 py-3 rounded-3xl'>
+              Get Started
+            </button>
+          </MagneticEffect>
           <canvas id="canvas" className="w-full h-screen pointer-events-none z-[-1]"></canvas>
         </div>
       </div>
-      <div className='h-[200vh]'>
-        <h1>Another Container</h1>
+      <div className='w-full'>
+        <AnimatedAboutSection />
       </div>
 
       <div className="w-full h-screen"></div>
