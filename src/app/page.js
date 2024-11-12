@@ -127,11 +127,17 @@ function Home() {
 
   return (
     <div className="w-full">
-      <div className="landing w-full h-[200vh]">
+      <div className="landing w-full h-[200vh] ">
         <div className="w-full h-screen sticky top-0 left-0">
+          {/* for bluish blur effect */}
+          <div className="absolute w-96 h-96 bg-blue-300 opacity-50 blur-[150px] rounded-full top-10 -left-20"></div>
+
           <h1 className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-xl md:text-6xl whitespace-nowrap font-medium">Discover . Decode . Document</h1>
           <p className="absolute font-semibold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 pointer-events-none text-md md:text-3xl text-center tracking-normal leading-loose">
           A <span className="font-bold font-mono">Digital Archive</span> capturing ancient knowledge through the preservation and transcription of palm leaf manuscripts.          </p>
+
+          <div className="absolute w-96 h-96 bg-blue-300 opacity-50 blur-[120px] rounded-full bottom-0 right-0"></div>
+
           <MagneticEffect>
             <button className='opacity-0 absolute top-[67%] left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black text-white px-6 py-3 rounded-3xl'>
               Get Started
