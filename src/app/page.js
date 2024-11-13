@@ -8,6 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import AnimatedAboutSection from '@/components/About';
 import MagneticEffect from '@/components/MagneticEffect';
+import Features from '@/components/Features';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -148,6 +149,9 @@ function Home() {
       </div>
       <div className='w-full'>
         <AnimatedAboutSection />
+      </div>
+      <div className='w-full'>
+        <Features />
       </div>
 
       <div className="w-full h-screen"></div>

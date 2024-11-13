@@ -54,7 +54,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed backdrop-blur-md z-10 flex justify-between items-center top-0 left-0 w-full py-5 px-20">
+      <nav className="fixed backdrop-blur-md z-10 flex justify-between items-center top-0 left-0 w-full py-5 px-10 md:px-20">
         <div className='flex flex-col gap-2'>
           <Link href="/" className="logo">
             <h3 className=''>logo.co</h3>
@@ -65,7 +65,7 @@ const Navbar = () => {
         </div>
 
         <div className="flex text-sm justify-between items-center gap-8">
-          <div className="flex text-sm justify-between items-center gap-8">
+          <div className="md:flex hidden text-sm justify-between items-center gap-8">
             <Link href="/" className="nav-link">Home</Link>
             <Link href="/search/:id" className="nav-link">Search</Link>
             <Link href="/admin" className="nav-link">Admin</Link>

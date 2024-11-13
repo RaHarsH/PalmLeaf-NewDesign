@@ -84,17 +84,17 @@ export default function AnimatedAboutSection() {
       </p>
 
       <div className="grid md:grid-cols-2 gap-12 mt-16">
-        <div ref={(el) => (cardsRef.current[0] = el)} className="bg-white p-8 rounded-lg shadow-lg opacity-0">
+        <div ref={(el) => (cardsRef.current[0] = el)} className="bg-white p-8 rounded-xl shadow-lg opacity-0">
           <h3 className="text-2xl font-semibold mb-4 text-gray-800">How We Preserve History</h3>
-          <p className="text-md text-gray-600 text-justify">
+          <p className="text-md text-gray-600 text-left lg:text-justify">
             Our approach to preservation involves sourcing original manuscripts, digitally scanning them with precision,
             and collaborating with experts to transcribe and translate their contents.
           </p>
         </div>
 
-        <div ref={(el) => (cardsRef.current[1] = el)} className="bg-white p-8 rounded-lg shadow-lg opacity-0">
+        <div ref={(el) => (cardsRef.current[1] = el)} className="bg-white p-8 rounded-xl shadow-lg opacity-0">
           <h3 className="text-2xl font-semibold mb-4 text-gray-800">Why It Matters</h3>
-          <p className="text-md text-gray-600 text-justify">
+          <p className="text-md text-gray-600 text-left lg:text-justify">
             Preserving these ancient texts ensures that cultural heritage is not only remembered but actively shared
             and celebrated. Each manuscript holds stories, teachings, and wisdom that can enrich our understanding of
             history and inform our present.
@@ -102,17 +102,17 @@ export default function AnimatedAboutSection() {
         </div>
 
         {/* New content boxes */}
-        <div ref={(el) => (cardsRef.current[2] = el)} className="bg-white p-8 rounded-lg shadow-lg opacity-0">
+        <div ref={(el) => (cardsRef.current[2] = el)} className="bg-white p-8 rounded-xl shadow-lg opacity-0">
           <h3 className="text-2xl font-semibold mb-4 text-gray-800">The Collaborative Effort</h3>
-          <p className="text-md text-gray-600 text-justify">
+          <p className="text-md text-gray-600 text-left lg:text-justify">
             This project is made possible through partnerships with cultural historians, linguists, and preservationists
             who dedicate their expertise to deciphering and authenticating these rare documents.
           </p>
         </div>
 
-        <div ref={(el) => (cardsRef.current[3] = el)} className="bg-white p-8 rounded-lg shadow-lg opacity-0">
+        <div ref={(el) => (cardsRef.current[3] = el)} className="bg-white p-8 rounded-xl shadow-lg opacity-0">
           <h3 className="text-2xl font-semibold mb-4 text-gray-800">A Glimpse into the Future</h3>
-          <p className="text-md text-gray-600 text-justify">
+          <p className="text-md text-gray-600 text-left lg:text-justify">
             Looking ahead, we aim to expand our digital archive, incorporating more manuscripts and adding interactive
             features that allow users to engage more deeply with the content.
           </p>
