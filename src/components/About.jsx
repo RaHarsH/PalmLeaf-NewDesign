@@ -74,7 +74,7 @@ export default function AnimatedAboutSection() {
 
   return (
     <section ref={sectionRef} className="about-section py-16 px-4 md:px-20 bg-gradient-to-b from-white to-blue-50">
-      <h2 ref={headingRef} className="text-4xl font-bold text-center mb-8 text-gray-800 opacity-0">
+      <h2 ref={headingRef} className="text-5xl font-semibold text-center mb-8 text-gray-800 opacity-0">
         About Our Project
       </h2>
       <p ref={paragraphRef} className="text-lg text-gray-700 mb-10 max-w-3xl mx-auto text-center opacity-0">
