@@ -23,13 +23,16 @@ const MagneticEffect = ({children}) => {
             xTo(0);
             yTo(0);
         }
-
-        ref.current.addEventListener('mousemove', mouseMove);
-        ref.current.addEventListener('mouseleave', mouseLeave);
-
-        return () => {
+        if(ref.current) {
             ref.current.addEventListener('mousemove', mouseMove);
             ref.current.addEventListener('mouseleave', mouseLeave);
+        }
+
+        return () => {
+            if(ref.current) {
+                ref.current.addEventListener('mousemove', mouseMove);
+                ref.current.addEventListener('mouseleave', mouseLeave);
+            }
         }
     }, [])
   return (

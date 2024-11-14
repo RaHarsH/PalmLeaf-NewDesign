@@ -9,6 +9,7 @@ import Lenis from 'lenis';
 import AnimatedAboutSection from '@/components/About';
 import MagneticEffect from '@/components/MagneticEffect';
 import Features from '@/components/Features';
+import ParallaxContributors from '@/components/ContributorsSection';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -152,6 +153,9 @@ function Home() {
       </div>
       <div className='w-full'>
         <Features />
+      </div>
+      <div className='w-full'>
+        <ParallaxContributors />
       </div>
 
       <div className="w-full h-screen"></div>
