@@ -9,8 +9,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const navItems = [
   { name: 'Home', href: '/' },
-  { name: 'Search', href: '/search:id' },
-  { name: 'Admin', href: '/admin' },
+  { name: 'Search', href: '/search' },
+  { name: 'Admin', href: '/admin/dashboard' },
   { name: 'Sign In', href: '/signin' },
 ];
 
@@ -97,7 +97,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed backdrop-blur-md z-20 flex justify-between items-center top-0 left-0 w-full py-5 px-10 md:px-20">
+      <nav className="fixed backdrop-blur-md z-30 flex justify-between items-center top-0 left-0 w-full py-5 px-10 md:px-20">
         <div className="flex flex-col gap-2">
           <Link href="/" className="logo">
             <h3>logo.co</h3>
@@ -110,8 +110,8 @@ const Navbar = () => {
         <div className="flex items-center gap-8">
           <div className="hidden md:flex text-sm justify-between items-center gap-8">
             <Link href="/" className="nav-link">Home</Link>
-            <Link href="/search/:id" className="nav-link">Search</Link>
-            <Link href="/admin" className="nav-link">Admin</Link>
+            <Link href="/search" className="nav-link">Search</Link>
+            <Link href="/admin/dashboard" className="nav-link">Admin</Link>
             <Link href="/signin">
               <MagneticEffect>
                 <button className="bg-[#3398FF] text-white px-5 py-2 rounded-3xl">
@@ -141,7 +141,7 @@ const Navbar = () => {
       </nav>
 
       {/* Full-screen animated menu */}
-      <div ref={menuRef} className="relative z-10">
+      <div ref={menuRef} className="relative z-20">
         <nav
           ref={navRef}
           className="fixed inset-0 bg-gradient-to-br from-blue-50 to-blue-200 text-primary-foreground flex items-center justify-center"

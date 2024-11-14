@@ -15,3 +15,17 @@
   ::-webkit-scrollbar-track {
     background: transparent; 
   }
+
+
+  @layer utilities {
+    /* For WebKit browsers (Chrome, Safari) */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none; /* Hides the scrollbar */
+    }
+  
+    /* For Firefox */
+    .no-scrollbar {
+      scrollbar-width: none; /* Hides the scrollbar */
+    }
+  }
+  
