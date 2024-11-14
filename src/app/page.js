@@ -10,6 +10,7 @@ import AnimatedAboutSection from '@/components/About';
 import MagneticEffect from '@/components/MagneticEffect';
 import Features from '@/components/Features';
 import ParallaxContributors from '@/components/ContributorsSection';
+import AnimatedFooter from '@/components/Footer';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -158,7 +159,7 @@ function Home() {
         <ParallaxContributors />
       </div>
 
-      <div className="w-full h-screen"></div>
+      <AnimatedFooter />
     </div>
   );
 }

@@ -3,9 +3,8 @@
 import { useRef, useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Database, Code, Cloud, Camera, User } from 'lucide-react'  // Import appropriate icons
+import { Database, Code, Cloud, Camera, User } from 'lucide-react' 
 
-// Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger)
 
 const teams = [
@@ -45,6 +44,23 @@ export default function ParallaxContributors() {
   const containerRef = useRef(null)
   const cardsRef = useRef(null)
   const textRef = useRef(null)
+  const contributorsHeadingRef = useRef(null)
+
+  useEffect(() => {
+    gsap.fromTo(contributorsHeadingRef.current, {
+        y: 100,
+        opacity: 0,
+    }, {
+        y: 0,
+        opacity: 1,
+        scrollTrigger: {
+            trigger: contributorsHeadingRef.current,
+            start: 'top 80%',
+            end: 'top top',
+            scrub: true,
+        }
+    })
+  })
 
   useEffect(() => {
     const container = containerRef.current
@@ -81,9 +97,10 @@ export default function ParallaxContributors() {
 
   return (
     <div ref={containerRef} className="h-screen overflow-hidden relative bg-gradient-to-r from-blue-100 to-blue-200">
+        <h1 ref={contributorsHeadingRef} className='absolute left-1/2 -translate-x-1/2 top-20 text-4xl md:text-6xl font-semibold'>Contributors</h1>
       <div 
         ref={textRef} 
-        className="absolute top-1/2 left-0 transform -translate-y-1/2 text-[20vw] font-bold text-blue-200 whitespace-nowrap pointer-events-none z-0"
+        className="absolute top-1/2 left-0 transform -translate-y-1/2 text-[30vw] font-bold text-blue-200 whitespace-nowrap pointer-events-none z-0"
         aria-hidden="true"
       >
         Contributors
