@@ -11,7 +11,7 @@ const navItems = [
   { name: 'Home', href: '/' },
   { name: 'Search', href: '/search' },
   { name: 'Admin', href: '/admin/dashboard' },
-  { name: 'Sign In', href: '/signin' },
+  { name: 'Sign In', href: '/auth/signin' },
 ];
 
 const Navbar = () => {
@@ -112,7 +112,7 @@ const Navbar = () => {
             <Link href="/" className="nav-link">Home</Link>
             <Link href="/search" className="nav-link">Search</Link>
             <Link href="/admin/dashboard" className="nav-link">Admin</Link>
-            <Link href="/signin">
+            <Link href="/auth/signin">
               <MagneticEffect>
                 <button className="bg-[#3398FF] text-white px-5 py-2 rounded-3xl">
                   Sign In
