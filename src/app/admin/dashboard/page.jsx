@@ -124,7 +124,7 @@ export default function Page() {
         </header>
 
         {/* Main content area to upload the data */}
-        <main className="flex-1 overflow-x-hidden no-scrollbar  overflow-y-auto p-4">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto p-4">
           {activeTab === 'insert' ? (
             <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
