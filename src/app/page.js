@@ -14,118 +14,123 @@ import AnimatedFooter from '@/components/Footer';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const lenis = new Lenis();
-
-lenis.on('scroll', (e) => {
-  console.log(e);
-});
-
-function raf(time) {
-  lenis.raf(time);
+if (typeof window !== 'undefined') {
+  const lenis = new Lenis();
+  
+  lenis.on('scroll', (e) => {
+    console.log(e);
+  });
+  
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  
   requestAnimationFrame(raf);
-}
 
-requestAnimationFrame(raf);
+}
 
 function Home() {
   useEffect(() => {
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(
-      20, 
-      window.innerWidth / window.innerHeight, 
-      0.1, 
-      100 
-    );
-
-    if(window.innerWidth <= 400) {
-      camera.position.z = 20;
-    }
-
-    camera.position.z = 14;
-
-    const canvas = document.querySelector('canvas');
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    const geometry = new THREE.IcosahedronGeometry(2.1, 100, 100);
-
-    const shaderMaterial = new THREE.ShaderMaterial({
-      vertexShader: vertex,
-      fragmentShader: fragment,
-      uniforms: {
-        uTime: { value: 0 },
-        uColorChange: { value: 0 },
-      },
-      wireframe: false,
-    });
-
-    const sphere = new THREE.Mesh(geometry, shaderMaterial);
-    sphere.position.y = -2.6;
-
-    scene.add(sphere);
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.landing',
-        start: 'top top',
-        end: 'bottom center',
-        scrub: 2,
-        markers: false,
-      },
-    });
-
-    tl.to(sphere.position, {
-      y: 0,
-      z: -2,
-      duration: 20,
-      ease: 'sine.in',
-    }, '1')
-      .to(shaderMaterial.uniforms.uColorChange, {
-        duration: 10,
-        value: 1,
-        ease: 'power2.inOut',
-      }, '1')
-      .to('.landing h1', {
-        y: -25,
-        opacity: 0,
-        duration: 5,
-        ease: 'sine.in',
-      }, '1')
-      .to('.landing p', {
-        opacity: 1,
-        duration: 40,
-        y: 0,
-      }, '2')
-      .to('.landing button', {
-        y: -0,
-        opacity: 1,
-        duration: 40,
-        y: 0,
-      }, '2');
-
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+    if (typeof window !== 'undefined') {
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        20, 
+        window.innerWidth / window.innerHeight, 
+        0.1, 
+        100 
+      );
 
       if(window.innerWidth <= 400) {
         camera.position.z = 20;
       }
-      else {
-        camera.position.z = 14;
+
+      camera.position.z = 14;
+
+      const canvas = document.querySelector('canvas');
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const geometry = new THREE.IcosahedronGeometry(2.1, 100, 100);
+
+      const shaderMaterial = new THREE.ShaderMaterial({
+        vertexShader: vertex,
+        fragmentShader: fragment,
+        uniforms: {
+          uTime: { value: 0 },
+          uColorChange: { value: 0 },
+        },
+        wireframe: false,
+      });
+
+      const sphere = new THREE.Mesh(geometry, shaderMaterial);
+      sphere.position.y = -2.6;
+
+      scene.add(sphere);
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.landing',
+          start: 'top top',
+          end: 'bottom center',
+          scrub: 2,
+          markers: false,
+        },
+      });
+
+      tl.to(sphere.position, {
+        y: 0,
+        z: -2,
+        duration: 20,
+        ease: 'sine.in',
+      }, '1')
+        .to(shaderMaterial.uniforms.uColorChange, {
+          duration: 10,
+          value: 1,
+          ease: 'power2.inOut',
+        }, '1')
+        .to('.landing h1', {
+          y: -25,
+          opacity: 0,
+          duration: 5,
+          ease: 'sine.in',
+        }, '1')
+        .to('.landing p', {
+          opacity: 1,
+          duration: 40,
+          y: 0,
+        }, '2')
+        .to('.landing button', {
+          y: -0,
+          opacity: 1,
+          duration: 40,
+          y: 0,
+        }, '2');
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        if(window.innerWidth <= 400) {
+          camera.position.z = 20;
+        }
+        else {
+          camera.position.z = 14;
+        }
+      });
+
+      const clock = new THREE.Clock();
+
+      function animate() {
+        shaderMaterial.uniforms.uTime.value = clock.getElapsedTime() * 1.2;
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
       }
-    });
 
-    const clock = new THREE.Clock();
-
-    function animate() {
-      shaderMaterial.uniforms.uTime.value = clock.getElapsedTime() * 1.2;
-      requestAnimationFrame(animate);
-      renderer.render(scene, camera);
+      animate();
     }
-
-    animate();
   }, []);
 
   return (
