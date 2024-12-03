@@ -7,7 +7,7 @@ const mockData = [
   {
     id: 1,
     sNo: '001',
-    bundleOrigin: 'SVM',
+    bundleOrigin: 'origin goes here',
     bundleOwnerName: 'Sode Math',
     bundleNumber: '985',
     bundleReceivedDate: '8 Feb 2023',
