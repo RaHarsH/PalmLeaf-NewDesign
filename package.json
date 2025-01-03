@@ -22,6 +22,7 @@
     "raw-loader": "^4.0.2",
     "react": "^18",
     "react-dom": "^18",
+    "react-feather": "^2.0.10",
     "three": "^0.170.0"
   },
   "devDependencies": {

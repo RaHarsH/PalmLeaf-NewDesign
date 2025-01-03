@@ -6,6 +6,7 @@ import axios from 'axios';
 
 export default function Page() {
   const [activeTab, setActiveTab] = useState('insert');
+  const [loading, setLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [tableData, setTableData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -99,18 +100,9 @@ export default function Page() {
     }
   }, [selectedTable, activeTab]);
 
-  const fetchTableData = async (tableName) => {
-    try {
-      const response = await axios.get(`/api/${tableName}`);
-      setTableData(response.data || []);
-    } catch (error) {
-      console.error('Error fetching table data:', error);
-    }
-  };
-
   const getInputType = (fieldName) => {
     // Date fields
-    if (fieldName.includes('date') || fieldName === 'birth_year' || fieldName === 'death_year') {
+    if (fieldName.includes('date')) {
       return 'date';
     }
     
@@ -153,6 +145,19 @@ export default function Page() {
     return '';
   };
 
+  const fetchTableData = async (tableName) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`/api/fetchData?tableName=${tableName}`);
+      setTableData(response.data || []);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      alert(`Failed to fetch data for table: ${tableName}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -184,6 +189,46 @@ export default function Page() {
       alert('Error inserting data: ' + (error.response?.data?.message || error.message));
     }
   }
+
+  const handleUpdate = async (rowId) => {
+    const updatedData = {
+      tableName: selectedTable,
+      data: [editRow], 
+    };
+
+    try {
+      const response = await axios.put(`/api/updateData?tableName=${selectedTable}&rowId=${rowId}`, updatedData, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+      
+      if (response.status === 200) {
+        alert('Data updated successfully!');
+        fetchTableData(selectedTable);
+        setEditRow(null);
+      } else {
+        alert('Error updating data');
+      }
+    } catch (error) {
+      console.error('Error updating data:', error);
+      alert('Error updating data: ' + (error.response?.data?.message || error.message));
+    }
+  };
+
+  const handleDelete = async (rowId) => {
+    // Handle the delete functionality
+    try {
+      const response = await axios.delete(`/api/deleteData?tableName=${selectedTable}&rowId=${rowId}`);
+      if (response.status === 200) {
+        alert('Data deleted successfully!');
+        fetchTableData(selectedTable);
+      } else {
+        alert('Error deleting data');
+      }
+    } catch (error) {
+      console.error('Error deleting data:', error);
+      alert('Error deleting data: ' + (error.response?.data?.message || error.message));
+    }
+  };
 
   const filteredData = tableData.filter((row) =>
     Object.values(row).some(
@@ -363,6 +408,20 @@ export default function Page() {
                           {row[field]}
                         </td>
                       ))}
+                       <td className="px-4 py-2 border">
+                          <button
+                            onClick={() => setEditRow(row)}
+                            className="mr-2 text-blue-600"
+                          >
+                            <Eye size={16} />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(row.id)}
+                            className="text-red-600"
+                          >
+                            <X size={16} />
+                          </button>
+                        </td>
                     </tr>
                   ))}
                 </tbody>
@@ -374,3 +433,4 @@ export default function Page() {
     </div>
   );
 }
+// in this code handle the update functionality (when i click the eye icon it shhold show the cursor to change or update the fields ) provide me the entire code 

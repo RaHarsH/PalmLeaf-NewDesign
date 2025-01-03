@@ -42,7 +42,7 @@ export async function POST(request) {
       return new Response(JSON.stringify({ message: "Invalid table name" }), { status: 400 });
     }
 
-    // Construct the query dynamically based on tableName and data
+    // Constructing the query dynamically based on tableName and data
     const columns = Object.keys(data[0]);
     const values = data.map((item) => `(${columns.map((_, i) => `$${i + 1}`).join(", ")})`).join(", ");
     const sql = `INSERT INTO ${tableName} (${columns.join(", ")}) VALUES ${values}`;
@@ -55,7 +55,7 @@ export async function POST(request) {
 
     console.log(`flattenedValues: ${flattenedValues}`);
 
-    // Execute the query
+    
     let client;
     try {
       client = await pool.connect();
