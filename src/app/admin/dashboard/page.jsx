@@ -11,6 +11,10 @@ export default function Page() {
   const [tableData, setTableData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTable, setSelectedTable] = useState('useraccount');
+  const [editRow, setEditRow] = useState(null);
+
+  const [editingRows, setEditingRows] = useState(new Set());
+  const [editedData, setEditedData] = useState({});
 
   const tableSchemas = {
     useraccount: ['user_id', 'username', 'password', 'role'],
@@ -190,21 +194,51 @@ export default function Page() {
     }
   }
 
-  const handleUpdate = async (rowId) => {
-    const updatedData = {
-      tableName: selectedTable,
-      data: [editRow], 
-    };
+  const handleEdit = (rowId) => {
+    setEditingRows(prev => {
+      const newSet = new Set(prev);
+      newSet.add(rowId);
+      return newSet;
+    });
+    setEditedData(prev => ({
+      ...prev,
+      [rowId]: { ...tableData.find(row => row.id === rowId) }
+    }));
+  };
 
+  const handleCancelEdit = (rowId) => {
+    setEditingRows(prev => {
+      const newSet = new Set(prev);
+      newSet.delete(rowId);
+      return newSet;
+    });
+    const newEditedData = { ...editedData };
+    delete newEditedData[rowId];
+    setEditedData(newEditedData);
+  };
+
+  const handleEditChange = (rowId, field, value) => {
+    setEditedData(prev => ({
+      ...prev,
+      [rowId]: {
+        ...prev[rowId],
+        [field]: value
+      }
+    }));
+  };
+
+  const handleUpdate = async (rowId) => {
     try {
-      const response = await axios.put(`/api/updateData?tableName=${selectedTable}&rowId=${rowId}`, updatedData, {
-        headers: { 'Content-Type': 'application/json' },
+      const response = await axios.patch('/api/updateData', {
+        tableName: selectedTable,
+        id: rowId,
+        data: editedData[rowId]
       });
       
       if (response.status === 200) {
         alert('Data updated successfully!');
+        handleCancelEdit(rowId);
         fetchTableData(selectedTable);
-        setEditRow(null);
       } else {
         alert('Error updating data');
       }
@@ -212,6 +246,52 @@ export default function Page() {
       console.error('Error updating data:', error);
       alert('Error updating data: ' + (error.response?.data?.message || error.message));
     }
+  };
+
+  const renderEditableCell = (row, field) => {
+    const isEditing = editingRows.has(row.id);
+    const inputType = getInputType(field);
+
+    if (!isEditing) {
+      return <span>{row[field]}</span>;
+    }
+
+    if (inputType === 'select' && field === 'stitch_or_noStitch') {
+      return (
+        <select
+          value={editedData[row.id]?.[field] || ''}
+          onChange={(e) => handleEditChange(row.id, field, e.target.value)}
+          className="w-full p-1 border rounded-sm"
+        >
+          <option value="stitch">Stitch</option>
+          <option value="noStitch">No Stitch</option>
+        </select>
+      );
+    }
+
+    if (inputType === 'select' && field.includes('status')) {
+      return (
+        <select
+          value={editedData[row.id]?.[field] || ''}
+          onChange={(e) => handleEditChange(row.id, field, e.target.value)}
+          className="w-full p-1 border rounded-sm"
+        >
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      );
+    }
+
+    return (
+      <input
+        type={inputType}
+        value={editedData[row.id]?.[field] || ''}
+        onChange={(e) => handleEditChange(row.id, field, e.target.value)}
+        className="w-full p-1 border rounded-sm"
+        step={inputType === 'number' && field.includes('size') ? '0.01' : '1'}
+        min={inputType === 'number' ? '0' : undefined}
+      />
+    );
   };
 
   const handleDelete = async (rowId) => {
@@ -229,6 +309,8 @@ export default function Page() {
       alert('Error deleting data: ' + (error.response?.data?.message || error.message));
     }
   };
+
+  
 
   const filteredData = tableData.filter((row) =>
     Object.values(row).some(
@@ -433,4 +515,3 @@ export default function Page() {
     </div>
   );
 }
-// in this code handle the update functionality (when i click the eye icon it shhold show the cursor to change or update the fields ) provide me the entire code 
