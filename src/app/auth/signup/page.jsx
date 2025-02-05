@@ -121,7 +121,7 @@ export default function SignUp() {
             <input
               id="role"
               type="text"
-              value="User"
+              value="user"
               readOnly
               className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed"
             />
