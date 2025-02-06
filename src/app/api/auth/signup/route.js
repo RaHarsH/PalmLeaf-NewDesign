@@ -44,7 +44,7 @@ export async function POST(request) {
     console.log('====================================');
 
     const client = await pool.connect();
-    ``
+    
     const query = await client.query('SELECT column_name FROM information_schema.columns WHERE table_name = $1', ['useraccount']);
     console.log('Table structure:', query.rows);
 

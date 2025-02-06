@@ -17,6 +17,11 @@ export default function SignUp() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -25,6 +30,13 @@ export default function SignUp() {
     event.preventDefault();
     setError('');
     setSuccess('');
+
+    if (!validatePassword(formData.password)) {
+      setError("Password must be at least 8 characters long and include letters, numbers, and special characters.");
+      return;
+    } else {
+        setError("");
+    }
 
     try {
       const response = await axios.post('/api/auth/signup', formData, {
@@ -102,6 +114,7 @@ export default function SignUp() {
                 {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
               </button>
             </div>
+
           </div>
 
           <div className="space-y-2">
