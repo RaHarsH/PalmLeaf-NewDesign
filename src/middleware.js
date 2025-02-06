@@ -1,28 +1,6 @@
 import { NextResponse } from "next/server";
 import { jwtVerify } from "jose";  // Import jose for JWT verification
 
-async function verifyToken(token) {
-    try {
-        const secret = new TextEncoder().encode(process.env.TOKEN_SECRET); 
-        const { payload } = await jwtVerify(token, secret);
-        return payload; // Return decoded payload (includes role)
-    } catch (error) {
-        console.error("Invalid token:", error);
-        return null;
-    }
-}
-
-async function getUserRole(token) {
-
-    const userData = await verifyToken(token);
-
-    if (userData) {
-        const userRole = userData.role;
-        return userRole;
-    }
-
-    return undefined;
-}
 
 export function middleware(request) {
     const path = request.nextUrl.pathname;
@@ -41,6 +19,12 @@ export function middleware(request) {
     if(!isPublicPath && !token) {
         return NextResponse.redirect(new URL('/auth/signin', request.nextUrl));
     }
+
+
+    /*
+        This code below is giving an error when logging out 
+        so i am commenting it out
+    */
 
     // Decode and verify JWT token using jose
     // const userData = token ? await verifyToken(token) : null;
@@ -68,7 +52,37 @@ export const config = {
         '/profile',
         // '/profile/:id',
         '/admin/dashboard',
+        '/admin/dashboard/userManagement',
+        '/admin/dashboard/dataManagement',
+        '/admin/dashboard',
         '/auth/signin',
         '/auth/signup',
     ]
 }
+
+/*
+
+async function verifyToken(token) {
+    try {
+        const secret = new TextEncoder().encode(process.env.TOKEN_SECRET); 
+        const { payload } = await jwtVerify(token, secret);
+        return payload; // Return decoded payload (includes role)
+    } catch (error) {
+        console.error("Invalid token:", error);
+        return null;
+    }
+}
+
+async function getUserRole(token) {
+
+    const userData = await verifyToken(token);
+
+    if (userData) {
+        const userRole = userData.role;
+        return userRole;
+    }
+
+    return undefined;
+}
+
+*/

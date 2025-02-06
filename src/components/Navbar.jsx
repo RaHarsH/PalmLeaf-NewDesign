@@ -63,7 +63,7 @@ const Navbar = () => {
 
   useEffect(() => {
     getTokenFromServer();
-  }, []);
+  }, [router]);
 
 
   useEffect(() => {
