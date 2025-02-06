@@ -104,7 +104,7 @@ export default function SignUp() {
             </div>
           </div>
 
-          {/* <div className="space-y-2">
+          <div className="space-y-2">
             <label htmlFor="role" className="text-sm font-medium text-gray-700">Role</label>
             <input
               id="role"
@@ -114,18 +114,18 @@ export default function SignUp() {
               required
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </div> */}
+          </div>
 
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <label htmlFor="role" className="text-sm font-medium text-gray-700">Role</label>
             <input
               id="role"
               type="text"
-              value="user"
+              value="admin"
               readOnly
               className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed"
             />
-          </div>
+          </div> */}
 
 
           <button

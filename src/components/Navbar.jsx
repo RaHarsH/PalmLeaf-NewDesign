@@ -5,6 +5,10 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import MagneticEffect from './MagneticEffect';
 
+
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+
 gsap.registerPlugin(ScrollTrigger);
 
 const navItems = [
@@ -19,6 +23,52 @@ const Navbar = () => {
   const navRef = useRef(null);
   const menuRef = useRef(null);
   const tl = useRef(null);
+
+  // for showing sign in button and logout button based on the presence of token
+  const [token, setToken] = useState("");
+
+  const router = useRouter()
+
+  const getTokenFromServer = async () => {
+    try {
+      const response = await axios.get("/api/auth/me");
+
+      console.log(response);
+
+      if(response.data.token) {
+        setToken(response.data.token)
+      }
+      else {
+        console.log("Token not found !")
+      }
+      
+    } catch (error) {
+      console.error("Error fetching token:", error);
+    }
+  }
+
+  const handleLogout = async () => {
+    try {
+      await axios.get("/api/auth/logout")
+      console.log('====================================');
+      console.log('Logout successful');
+      console.log('====================================');
+
+      setToken("")
+      router.push("/auth/signin")
+    } catch (error) {
+        console.log("Logout failed", error.message)
+    }
+  }
+
+  useEffect(() => {
+    getTokenFromServer();
+  }, []);
+
+
+  useEffect(() => {
+    getTokenFromServer();
+  }, [token]);
 
   useEffect(() => {
     gsap.to('.nav-link', {
@@ -110,15 +160,41 @@ const Navbar = () => {
         <div className="flex items-center gap-8">
           <div className="hidden md:flex text-sm justify-between items-center gap-8">
             <Link href="/" className="nav-link">Home</Link>
-            <Link href="/search" className="nav-link">Search</Link>
-            <Link href="/admin/dashboard" className="nav-link">Admin</Link>
-            <Link href="/auth/signin">
-              <MagneticEffect>
-                <button className="bg-[#3398FF] text-white px-5 py-2 rounded-3xl">
-                  Sign In
+
+            {
+              // show the admin dashboard and search page if the token exists i.e if the user is logged in
+              token && (
+                <>
+                  <Link href="/search" className="nav-link">Search</Link>
+                  <Link href="/admin/dashboard" className="nav-link">Admin</Link>
+                </>
+              )
+
+            }
+
+            {token ? (
+              // Show Profile and Logout if token exists
+              <>
+                <Link href="/profile" className="nav-link">
+                  Profile
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="bg-[#3398FF] text-white px-5 py-2 rounded-3xl"
+                >
+                  Logout
                 </button>
-              </MagneticEffect>
-            </Link>
+              </>
+            ) : (
+              // Show Sign In button if token does not exist
+              <Link href="/auth/signin">
+                <MagneticEffect>
+                  <button className="bg-[#3398FF] text-white px-5 py-2 rounded-3xl">
+                    Sign In
+                  </button>
+                </MagneticEffect>
+              </Link>
+            )}
           </div>
 
           {/* Hamburger menu */}

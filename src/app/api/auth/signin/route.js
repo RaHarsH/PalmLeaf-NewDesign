@@ -41,9 +41,10 @@ export async function POST(request) {
 
     // create token
     const tokenData = {
-      id: user._id,
+      id: user.user_id,
       username: user.username,
       email: user.email,
+      role: user.role,
     }
 
     // res.status(200).json({ id: user.user_id, username: user.username, role: user.role });
@@ -53,7 +54,7 @@ export async function POST(request) {
     const response = NextResponse.json({
         message: "Login successfull!",
         success: true,
-        user
+        user,
     })
 
     response.cookies.set("token", token, { httpOnly: true });
