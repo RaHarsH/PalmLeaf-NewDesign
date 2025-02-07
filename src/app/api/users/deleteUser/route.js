@@ -4,6 +4,9 @@ import { pool, testConnection } from '@/utils/db';
 export async function DELETE(request) {
     try {
         const reqBody = await request.json();
+
+        console.log(reqBody);
+        
         const { user_id } = reqBody;
 
         if (!user_id) {

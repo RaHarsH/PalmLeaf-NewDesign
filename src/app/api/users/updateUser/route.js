@@ -21,11 +21,10 @@ export async function PUT(request) {
         console.log("Result after changing the role: ", result);
 
         client.release();
-        
+
         if (result.affectedRows === 0) {
             return NextResponse.json({ error: "User not found or role unchanged." }, { status: 404 });
         }
-
 
         return NextResponse.json({ message: "User role updated successfully!" }, { status: 200 });
 

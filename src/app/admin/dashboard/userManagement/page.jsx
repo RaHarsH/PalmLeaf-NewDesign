@@ -1,19 +1,32 @@
 "use client";
 
 import axios from "axios";
-import { ArrowRight, Eye, EyeOff } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, Trash, Save, Trash2, Pencil } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { ArrowLeftCircle } from "react-feather";
 
+
+
 const Page = () => {
   const [user, setUser] = useState({ username: "", email: "", password: "", role: "" });
   const [success, setSuccess] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedSection, setSelectedSection] = useState("add");
+
   const [fetchedUsers, setFetchedUsers] = useState([]);
+
+  const [isEditable, setIsEditable] = useState({
+    user_id: "",
+    status: false,
+  });
+  const [editedUserRole, setEditedUserRole] = useState({
+    user_id: "",
+    role: "",
+  });
 
   const validatePassword = (password) => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -46,17 +59,63 @@ const Page = () => {
     setLoading(false);
   };
 
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get("/api/users/getUsers");
+      setFetchedUsers(response.data.allUsers.rows);
+
+    } catch (err) {
+      console.error("Failed to fetch users", err);
+    }
+  };
+
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get("/api/users/getUsers");
-        setFetchedUsers(response.data.allUsers.rows);
-      } catch (err) {
-        console.error("Failed to fetch users", err);
-      }
-    };
     fetchUsers();
   }, []);
+
+
+  const handleSave = async ({user_id, role}) => {
+    try {
+      const response = await axios.put('/api/users/updateUser', { user_id, role });
+  
+      console.log(response.data);
+  
+      if(response.status >= 200) {
+        console.log("Message from frontend: User role updated successfully!");
+      }
+
+      
+      // setIsEditable({user_id, status: false});
+      
+    } catch (error) {
+      console.error(error);
+      
+    } finally {
+      setIsEditable({user_id, status: false});
+      fetchUsers();
+    }
+     
+  }
+
+  const handleDelete = async ( user_id ) => {
+    try {
+      console.log("User with ID to be deleted: ", { user_id })
+      const response = await axios.delete('/api/users/deleteUser', {data: { user_id }});
+
+      console.log(response.data);
+
+      if(response.status >= 200) {
+        console.log("Message from frontend: User deleted successfully!");
+      }
+
+      // fetchUsers();
+    } catch (error) {
+      console.error(error);
+
+    } finally {
+      fetchUsers();
+    }
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100 relative top-20">
@@ -79,6 +138,8 @@ const Page = () => {
       </div>
       
       {/* Main Content */}
+
+      {/* Adding Users */}
       <div className="p-6 flex justify-center">
         {selectedSection === "add" && (
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg">
@@ -103,37 +164,79 @@ const Page = () => {
           </div>
         )}
 
+
+        {/* Manage Users */}
+
         {selectedSection === "manage" && (
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl">
-            <h2 className="text-2xl font-bold text-center mb-4">Manage Users</h2>
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-7xl">
+            <h2 className="text-2xl font-bold text-center mb-6 text-gray-800">Manage Users</h2>
             {fetchedUsers.length > 0 ? (
               <div className="overflow-x-auto">
-                <table className="w-full border-collapse border border-gray-200">
+                <table className="w-full border-collapse border border-gray-200 rounded-lg overflow-hidden shadow-lg">
                   <thead>
-                    <tr className="bg-gray-200">
-                      <th className="border border-gray-300 p-2">User ID</th>
-                      <th className="border border-gray-300 p-2">Username</th>
-                      <th className="border border-gray-300 p-2">Email</th>
-                      <th className="border border-gray-300 p-2">Role</th>
+                    <tr className="bg-blue-600 text-white">
+                      <th className="border border-gray-300 p-3 text-center">User ID</th>
+                      <th className="border border-gray-300 p-3 text-center">Username</th>
+                      <th className="border border-gray-300 p-3 text-center">Email</th>
+                      <th className="border border-gray-300 p-3 text-center">Role</th>
+                      <th colSpan={2} className="border border-gray-300 p-3 text-center">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {fetchedUsers.map((user) => (
-                      <tr key={user.user_id} className="odd:bg-white even:bg-gray-50">
-                        <td className="border border-gray-300 p-2 text-center">{user.user_id}</td>
-                        <td className="border border-gray-300 p-2 text-center">{user.username}</td>
-                        <td className="border border-gray-300 p-2 text-center">{user.email}</td>
-                        <td className="border border-gray-300 p-2 text-center">{user.role}</td>
+                      <tr key={user.user_id} className="odd:bg-white even:bg-gray-50 hover:bg-gray-100 transition">
+                        <td className="border border-gray-300 p-3 text-center">{user.user_id}</td>
+                        <td className="border border-gray-300 p-3 text-center">{user.username}</td>
+                        <td className="border border-gray-300 p-3 text-center">{user.email}</td>
+                        <td className="border border-gray-300 p-3 text-center">
+                          <input
+                            type="text"
+                            value={isEditable.user_id === user.user_id ? editedUserRole.role : user.role}
+                            disabled={isEditable.user_id !== user.user_id}
+                            onChange={(e) => setEditedUserRole({ user_id: user.user_id, role: e.target.value })}
+                            className={`w-full px-3 py-1 border rounded-md focus:outline-none ${
+                              isEditable.user_id === user.user_id ? "border-blue-500 bg-white" : "bg-gray-100"
+                            }`}
+                          />
+                        </td>
+                        <td className="border border-gray-300 p-3 text-center">
+                          <div className="w-full flex justify-center">
+                            {isEditable.user_id === user.user_id ? (
+                              <button
+                                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 flex items-center rounded-md transition"
+                                onClick={() => handleSave({user_id: user.user_id, role: editedUserRole.role})}
+                              >
+                                <Save className="mr-2 h-4 w-4" /> Save
+                              </button>
+                            ) : (
+                              <button
+                                className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 flex items-center rounded-md transition"
+                                onClick={() => setIsEditable({ user_id: user.user_id, status: true })}
+                              >
+                              <Pencil className="mr-2 h-4 w-4" /> Edit
+                              </button>
+                            )}
+                          </div>
+                        </td>
+
+                        <td className="border border-gray-300 p-3 text-center flex justify-center">
+                          <button 
+                            onClick={() => handleDelete(user.user_id)}
+                            className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 flex items-center rounded-md transition">
+                            <Trash2 className="mr-2 h-4 w-4" />Delete
+                          </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
             ) : (
-              <p className="text-center">No users found</p>
+              <p className="text-center text-gray-600">No users found</p>
             )}
           </div>
         )}
+
       </div>
     </div>
   );
