@@ -5,6 +5,7 @@ import { ArrowRight, Eye, EyeOff, Trash, Save, Trash2, Pencil } from "lucide-rea
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { ArrowLeftCircle } from "react-feather";
+import { toast } from "react-toastify";
 
 
 
@@ -51,10 +52,12 @@ const Page = () => {
 
       if (response.status === 201) {
         setSuccess("User added successfully!");
+        toast.success("User added successfully!");
         setUser({ username: "", email: "", password: "", role: "" });
       }
     } catch (error) {
       console.error(error);
+      toast.error("Error adding the user!");
     }
     setLoading(false);
   };
@@ -66,6 +69,7 @@ const Page = () => {
 
     } catch (err) {
       console.error("Failed to fetch users", err);
+      toast.error("Failed to fetch users");
     }
   };
 
@@ -81,6 +85,7 @@ const Page = () => {
       console.log(response.data);
   
       if(response.status >= 200) {
+        toast.success("User role updated successfully!");
         console.log("Message from frontend: User role updated successfully!");
       }
 
@@ -89,6 +94,7 @@ const Page = () => {
       
     } catch (error) {
       console.error(error);
+      toast.error("Error updating the user role!");
       
     } finally {
       setIsEditable({user_id, status: false});
@@ -105,12 +111,14 @@ const Page = () => {
       console.log(response.data);
 
       if(response.status >= 200) {
+        toast.success("User deleted successfully!");
         console.log("Message from frontend: User deleted successfully!");
       }
 
       // fetchUsers();
     } catch (error) {
       console.error(error);
+      toast.error("Error deleting the user!");
 
     } finally {
       fetchUsers();

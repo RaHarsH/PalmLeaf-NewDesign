@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 export default function AdminDashboardPage() {
   const router = useRouter();
@@ -19,12 +20,17 @@ export default function AdminDashboardPage() {
 
         if (!user || user.role.toUpperCase() !== "ADMIN") {
           router.push(user ? "/profile" : "/auth/signin");
+          toast.info("Unauthorized access");
           return;
+        }
+        else {
+          toast.success("User Authorized.Welcome Admin!");
         }
 
         setLoading(false);
       } catch (error) {
         console.error("Error fetching user:", error);
+        toast.error("Error fetching user!");
         router.push("/auth/signin");
       }
     };

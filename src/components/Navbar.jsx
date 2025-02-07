@@ -8,6 +8,7 @@ import MagneticEffect from './MagneticEffect';
 
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,9 +56,14 @@ const Navbar = () => {
       console.log('====================================');
 
       setToken("")
+
       router.push("/auth/signin")
+
+      toast.success("Logout successful");
+
     } catch (error) {
         console.log("Logout failed", error.message)
+        toast.error("Error logging out!");
     }
   }
 

@@ -4,6 +4,7 @@ import { Eye, EyeOff, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,11 +29,14 @@ export default function SignIn() {
 
       if (data.success) {
         router.push('/profile'); // Redirect to profile after successful login
+        toast.success('Login successful redirecting to profile page!');
       } else {
         setError(data.message || 'Invalid username or password');
+        toast.error('Invalid username or password');
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Something went wrong');
+      toast.error('Error signing in!');
     } finally {
       setLoading(false);
     }

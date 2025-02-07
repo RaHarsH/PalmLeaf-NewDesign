@@ -4,6 +4,7 @@ import { Eye, EyeOff, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import axios from 'axios'; // Import axios
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 export default function SignUp() {
   const router = useRouter();
@@ -48,6 +49,7 @@ export default function SignUp() {
       if (response.status === 200) {
         setSuccess('Signup successful! Please log in.');
         setFormData({ username: '', email: '', password: '', role: '' });
+        toast.success('Signup successful! Please log in.');
       }
 
       // redirect to sign in page after successful registration
@@ -56,6 +58,7 @@ export default function SignUp() {
     } catch (err) {
       if (err.response && err.response.data) {
         setError(err.response.data.error || 'Something went wrong. Please try again.');
+        toast.error("Error registering the user!");
       } else {
         setError('Something went wrong. Please try again.');
       }
