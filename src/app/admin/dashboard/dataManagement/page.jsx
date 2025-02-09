@@ -7,6 +7,8 @@ import FormThree from '@/app/_components/FormThree';
 import FormTwo from '@/app/_components/FormTwo';
 import FormSix from '@/app/_components/FormSix';
 import React, { useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Page = () => {
   const [step, setStep] = useState(1);
@@ -51,6 +53,24 @@ const Page = () => {
     }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      const response = await axios.post("/api/insertFormData", formData)
+
+      console.log("Response from the API: ", response.data)
+
+      if(response.data.status === 200) {
+        console.log("Data inserted successfully !")
+        toast.success("Data inserted successfully !")
+      }
+    } catch (error) {
+      toast.error("Error inserting data")
+      console.log("Error inserting data, ", error.response.data.error)
+    }
+  }
+
   return (
     <div className='w-full h-[90vh] mt-20'>
       <h1 className='text-2xl font-bold text-center'>Data Management</h1>
@@ -71,6 +91,7 @@ const Page = () => {
         <div className="mt-5 flex gap-5">
           {step > 1 && <button onClick={prevStep} className="px-4 py-2 bg-gray-500 text-white rounded">Prev</button>}
           {step < 6 && <button onClick={nextStep} className="px-4 py-2 bg-blue-500 text-white rounded">Next</button>}
+          {step === 6 && <button onClick={handleSubmit} className="px-4 py-2 bg-green-500 text-white rounded">Submit</button>}
         </div>
       </div>
     </div>
