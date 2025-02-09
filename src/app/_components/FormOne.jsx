@@ -4,7 +4,7 @@ const FormOne = ({ onNext, onDataChange, formData }) => {
   const [localFormData, setLocalFormData] = useState(formData);
 
   useEffect(() => {
-    setLocalFormData(formData.form1); // Ensure local state is in sync with parent data
+    setLocalFormData(formData || {}); // This is done to ensure local state is in sync with parent data
   }, [formData]);
 
   const handleChange = (e, category, field) => {
@@ -14,8 +14,10 @@ const FormOne = ({ onNext, onDataChange, formData }) => {
         ...prev,
         [category]: { ...prev[category], [field]: value },
       };
-      const newFormData = { ...formData, form1: updatedData };
-      onDataChange(newFormData); // Update parent state
+      
+      // const newFormData = { ...formData, form1: updatedData };
+
+      onDataChange(updatedData); // Update the parent state
       return updatedData;
     });
   };

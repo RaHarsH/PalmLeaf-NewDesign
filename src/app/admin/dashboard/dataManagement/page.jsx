@@ -56,14 +56,17 @@ const Page = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    console.log("This is the formData: ", formData)
+
     try {
       const response = await axios.post("/api/insertFormData", formData)
 
       console.log("Response from the API: ", response.data)
 
+      toast.success("Data inserted successfully !")
+      
       if(response.data.status === 200) {
         console.log("Data inserted successfully !")
-        toast.success("Data inserted successfully !")
       }
     } catch (error) {
       toast.error("Error inserting data")
