@@ -26,7 +26,8 @@ const FormFive = ({ onNext, onPrev, onDataChange, formData }) => {
         <div className="md:col-span-2">
           <h3 className="text-lg font-medium border-b pb-2 mb-2">Bundle Information</h3>
         </div>
-        {[
+        {["bundle_id",
+          "grantha_id",
           "bundle_origin",
           "bundle_owner_name",
           "bundle_number",
@@ -46,7 +47,7 @@ const FormFive = ({ onNext, onPrev, onDataChange, formData }) => {
             <label className="block font-medium capitalize">{field.replace(/_/g, " ")}:</label>
             <input
               type={
-                field.includes("date") ? "date" : field.includes("bundle_number") || field.includes("sriv_number") ? 'text' : field.includes("number") || field.includes("total") || field.includes("length") || field.includes("width")
+                field.includes("date") ? "date" : field.includes("bundle_number") || field.includes("sriv_number") ? 'text' : field.includes("number") || field.includes("id") || field.includes("total") || field.includes("length") || field.includes("width")
                   ? "number"
                   : "text"
               }

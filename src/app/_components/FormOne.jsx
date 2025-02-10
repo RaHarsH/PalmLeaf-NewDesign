@@ -28,7 +28,16 @@ const FormOne = ({ onNext, onDataChange, formData }) => {
       <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Language */}
         <div>
-          <label className="block font-medium">Language</label>
+          <label className="block font-medium">Language ID</label>
+          <input
+            type="number"
+            className="w-full p-2 border rounded-lg"
+            value={localFormData.language.language_id}
+            onChange={(e) => handleChange(e, "language", "language_id")}
+          />
+        </div> 
+        <div>
+          <label className="block font-medium">Language Name</label>
           <input
             type="text"
             className="w-full p-2 border rounded-lg"
@@ -39,7 +48,17 @@ const FormOne = ({ onNext, onDataChange, formData }) => {
 
         {/* Grantha Type */}
         <div>
-          <label className="block font-medium">Grantha Type</label>
+          <label className="block font-medium">Grantha Type ID</label>
+          <input
+            type="number"
+            className="w-full p-2 border rounded-lg"
+            value={localFormData.granthatype.grantha_type_id}
+            onChange={(e) => handleChange(e, "granthatype", "grantha_type_id")}
+          />
+        </div>  
+
+        <div>
+          <label className="block font-medium">Grantha Type Name</label>
           <input
             type="text"
             className="w-full p-2 border rounded-lg"
@@ -50,7 +69,17 @@ const FormOne = ({ onNext, onDataChange, formData }) => {
 
         {/* Grantha Deck */}
         <div>
-          <label className="block font-medium">Grantha Deck</label>
+          <label className="block font-medium">Grantha Deck ID</label>
+          <input
+            type="number"
+            className="w-full p-2 border rounded-lg"
+            value={localFormData.granthadeck.grantha_deck_id}
+            onChange={(e) => handleChange(e, "granthadeck", "grantha_deck_id")}
+          />
+        </div>
+
+        <div>
+          <label className="block font-medium">Grantha Deck Name</label>
           <input
             type="text"
             className="w-full p-2 border rounded-lg"
@@ -61,7 +90,16 @@ const FormOne = ({ onNext, onDataChange, formData }) => {
 
         {/* Author Name */}
         <div>
-          <label className="block font-medium">Author Name</label>
+          <label className="block font-medium">Author ID</label>
+          <input
+            type="number"
+            className="w-full p-2 border rounded-lg"
+            value={localFormData.author.author_id}
+            onChange={(e) => handleChange(e, "author", "author_id")}
+          />
+        </div>
+        <div>
+          <label className="block font-medium">Author Name</label> 
           <input
             type="text"
             className="w-full p-2 border rounded-lg"

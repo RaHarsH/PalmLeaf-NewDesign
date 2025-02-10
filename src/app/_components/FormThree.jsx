@@ -63,6 +63,16 @@ const FormThree = ({ onNext, onPrev, onDataChange, formData }) => {
         </div>
 
         <div>
+          <label className="block font-medium">Storage ID:</label>
+          <input
+            type="number"
+            className="w-full border p-2 rounded"
+            value={localFormData.storagemechanism?.storage_id || ""}
+            onChange={(e) => handleChange(e, "storagemechanism", "storage_id")}
+          />
+        </div>
+
+        <div>
           <label className="block font-medium">Grantha ID:</label>
           <input
             type="number"
@@ -147,6 +157,16 @@ const FormThree = ({ onNext, onPrev, onDataChange, formData }) => {
         </div>
 
         <div>
+          <label className="block font-medium">Condition ID:</label>
+          <input
+            type="number"
+            className="w-full border p-2 rounded"
+            value={localFormData.physicalcondition?.condition_id || ""}
+            onChange={(e) => handleChange(e, "physicalcondition", "condition_id")}
+          />
+        </div>
+
+        <div>
           <label className="block font-medium">Grantha ID:</label>
           <input
             type="number"
@@ -188,6 +208,16 @@ const FormThree = ({ onNext, onPrev, onDataChange, formData }) => {
         {/* Conservation History Section */}
         <div className="md:col-span-2">
           <h3 className="text-lg font-semibold mt-4 mb-2">Conservation History</h3>
+        </div>
+
+        <div>
+          <label className="block font-medium">Conservation ID:</label>
+          <input
+            type="number"
+            className="w-full border p-2 rounded"
+            value={localFormData.conservationhistory?.conservation_id || ""}
+            onChange={(e) => handleChange(e, "conservationhistory", "conservation_id")}
+          />
         </div>
 
         <div>

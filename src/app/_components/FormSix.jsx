@@ -29,6 +29,16 @@ const FormSix = ({ onPrev, onDataChange, formData }) => {
 
         {/* Name */}
         <div>
+          <label className="block font-medium">Subworker ID:</label>
+          <input
+            type="number"
+            className="w-full border p-2 rounded"
+            value={localFormData.subworks?.subworker_id || ""}
+            onChange={(e) => handleChange(e, "subworks", "subworker_id")}
+          />
+        </div>
+
+        <div>
           <label className="block font-medium">Name:</label>
           <input
             type="text"

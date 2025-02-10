@@ -42,6 +42,15 @@ const FormTwo = ({ onNext, onPrev, onDataChange, formData }) => {
             onChange={(e) => handleChange(e, "grantha_name")}
           />
         </div>
+        <div>
+          <label className="block font-medium">Grantha ID :</label>
+          <input
+            type="number"
+            className="w-full border p-2 rounded"
+            value={localFormData.grantha?.grantha_id || ""}
+            onChange={(e) => handleChange(e, "grantha_id")}
+          />
+        </div>
 
         {/* Creation Date */}
         <div>
