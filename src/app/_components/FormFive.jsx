@@ -44,7 +44,22 @@ const FormFive = ({ onNext, onPrev, onDataChange, formData }) => {
           "worked_by",
         ].map((field) => (
           <div key={field}>
-            <label className="block font-medium capitalize">{field.replace(/_/g, " ")}:</label>
+            <label className="block font-medium capitalize">{ field.replace(/_/g, " ") } { field.includes("length") || field.includes("width") ? " (cm)" : "" }:</label>
+
+            {field === "stitch_or_nonstitch" ? (
+              // Dropdown for stitch_or_nonstitch and permission_level
+              <select
+                className="w-full border p-2 rounded"
+                value={localFormData.bundle?.[field] || ""}
+                onChange={(e) => handleChange(e, "bundle", field)}
+              >
+                  <>
+                    <option value="">Select</option>
+                    <option value="stitched">Stitched</option>
+                    <option value="non-stitched">Non-Stitched</option>
+                  </>
+              </select>
+            ) : (
             <input
               type={
                 field.includes("date") ? "date" : field.includes("bundle_number") || field.includes("sriv_number") ? 'text' : field.includes("number") || field.includes("id") || field.includes("total") || field.includes("length") || field.includes("width")
@@ -55,8 +70,10 @@ const FormFive = ({ onNext, onPrev, onDataChange, formData }) => {
               value={localFormData.bundle?.[field] || ""}
               onChange={(e) => handleChange(e, "bundle", field)}
             />
+          )}
           </div>
-        ))}
+        )
+      )}
 
         {/* Access Control */}
         <div className="md:col-span-2">
@@ -65,12 +82,28 @@ const FormFive = ({ onNext, onPrev, onDataChange, formData }) => {
         {["user_id", "grantha_id", "permission_level"].map((field) => (
           <div key={field}>
             <label className="block font-medium capitalize">{field.replace(/_/g, " ")}:</label>
-            <input
-              type={field.includes("id") ? "number" : "text"}
-              className="w-full border p-2 rounded"
-              value={localFormData.accesscontrol?.[field] || ""}
-              onChange={(e) => handleChange(e, "accesscontrol", field)}
-            />
+            {field === 'permission_level' ? (
+              <select
+                className="w-full border p-2 rounded"
+                value={localFormData.accesscontrol?.[field] || ""}
+                onChange={(e) => handleChange(e, "accesscontrol", field)}
+              >
+                <>
+                  <option value="">Select</option>
+                  <option value="READ-ONLY">READ ONLY</option>
+                  <option value="READ-AND-WRITE-ONLY">READ AND WRITE ONLY</option>
+                  <option value="FULL-ACCESS">FULL ACCESS</option>
+                </>
+              </select>
+            ) : (
+              <input
+                type={field.includes("id") ? "number" : "text"}
+                className="w-full border p-2 rounded"
+                value={localFormData.accesscontrol?.[field] || ""}
+                onChange={(e) => handleChange(e, "accesscontrol", field)}
+              />
+            )
+            }
           </div>
         ))}
       </form>

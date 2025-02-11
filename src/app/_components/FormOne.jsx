@@ -88,7 +88,7 @@ const FormOne = ({ onNext, onDataChange, formData }) => {
           />
         </div>
 
-        {/* Author Name */}
+        {/* Author ID */}
         <div>
           <label className="block font-medium">Author ID</label>
           <input
@@ -98,6 +98,8 @@ const FormOne = ({ onNext, onDataChange, formData }) => {
             onChange={(e) => handleChange(e, "author", "author_id")}
           />
         </div>
+
+        {/* Author Name */}
         <div>
           <label className="block font-medium">Author Name</label> 
           <input
@@ -112,7 +114,7 @@ const FormOne = ({ onNext, onDataChange, formData }) => {
         <div>
           <label className="block font-medium">Birth Year</label>
           <input
-            type="number"
+            type="text"
             className="w-full p-2 border rounded-lg"
             value={localFormData.author.birth_year || ""}
             onChange={(e) => handleChange(e, "author", "birth_year")}
@@ -123,7 +125,7 @@ const FormOne = ({ onNext, onDataChange, formData }) => {
         <div>
           <label className="block font-medium">Death Year</label>
           <input
-            type="number"
+            type="text"
             className="w-full p-2 border rounded-lg"
             value={localFormData.author.death_year || ""}
             onChange={(e) => handleChange(e, "author", "death_year")}
@@ -148,6 +150,17 @@ const FormOne = ({ onNext, onDataChange, formData }) => {
             className="w-full p-2 border rounded-lg"
             value={localFormData.author.scribe_name}
             onChange={(e) => handleChange(e, "author", "scribe_name")}
+          />
+        </div>
+
+        {/* Location ID */}
+        <div>
+          <label className="block font-medium">Location ID</label>
+          <input
+            type="number"
+            className="w-full p-2 border rounded-lg"
+            value={localFormData.location.location_id}
+            onChange={(e) => handleChange(e, "location", "location_id")}
           />
         </div>
 

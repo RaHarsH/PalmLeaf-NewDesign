@@ -17,7 +17,7 @@ const Page = () => {
       language: { language_id: null, language_name: "" },
       granthatype: { grantha_type_id: null, type_name: "" },
       granthadeck: { grantha_deck_id: null, type_name: "" },
-      author: { author_id: null, name: "", birth_year: null, death_year: null, bio: "", scribe_name: "" },
+      author: { author_id: null, name: "", birth_year: "", death_year: "", bio: "", scribe_name: "" },
       location: { location_id: null, shelf_number: "", room_number: "" },
     },
     form2: {

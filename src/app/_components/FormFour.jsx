@@ -70,12 +70,26 @@ const FormFour = ({ onNext, onPrev, onDataChange, formData }) => {
         {["scan_id", "grantha_id", "scanner_model", "resolution_dpi", "technician_name", "lighting_conditions", "color_depth", "notes", "file_format", "page_count", "scanning_start_date", "scanning_completed_date", "grayscale_completed_date", "horizontal_or_vertical_scan", "numbered"].map((field) => (
           <div key={field}>
             <label className="block font-medium capitalize">{field.replace(/_/g, " ")}:</label>
-            <input
-              type={field.includes("date") ? "date" : field.includes("count") || field.includes("id") ? "number" : "text"}
+            {field === "horizontal_or_vertical_scan" ? (
+              <select
               className="w-full border p-2 rounded"
               value={localFormData.scanningproperties?.[field] || ""}
               onChange={(e) => handleChange(e, "scanningproperties", field)}
-            />
+            >
+              <>
+                <option value="">Select</option>
+                <option value="H-Scan">Horizontal scan</option>
+                <option value="V-Scan">Vertical Scan</option>
+              </>
+            </select>
+            ) : (
+              <input
+                type={field.includes("date") ? "date" : field.includes("count") || field.includes("id") || field.includes("resolution_dpi") ? "number" : "text"}
+                className="w-full border p-2 rounded"
+                value={localFormData.scanningproperties?.[field] || ""}
+                onChange={(e) => handleChange(e, "scanningproperties", field)}
+              />
+            )}
           </div>
         ))}
 
