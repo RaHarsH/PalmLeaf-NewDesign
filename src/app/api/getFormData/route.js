@@ -7,7 +7,9 @@ export async function GET() {
         client = await pool.connect();
         
         const query = `
-            SELECT 
+            SELECT DISTINCT on (g.grantha_id)
+                ac.user_id, ac.permission_level,
+                u.username,
                 g.grantha_name, g.creation_date, g.description, g.remarks,
                 l.language_name,
                 gt.type_name AS grantha_type,
@@ -21,8 +23,6 @@ export async function GET() {
                 si.image_url, si.capture_date,
                 df.file_name, df.file_path, df.file_format, df.folder_size_in_gb, df.capture_time, df.version_number, df.thumbnail_url,
                 b.bundle_origin, b.bundle_owner_name, b.bundle_number, b.bundle_received_date, b.sriv_number, b.bundle_returned_date, b.number_subwork, b.length, b.width, b.total_leaves, b.total_images, b.stitch_or_nonstitch, b.bundle_source_address, b.worked_by,
-                ac.user_id, ac.permission_level,
-                u.username,
                 sw.name AS subwork_name
             FROM grantha g
             LEFT JOIN granthalanguage gl ON g.grantha_id = gl.grantha_id
@@ -42,6 +42,7 @@ export async function GET() {
             LEFT JOIN useraccount u ON ac.user_id = u.user_id
             LEFT JOIN subworks sw ON b.bundle_id = sw.bundle_id
 
+            ORDER BY g.grantha_id ASC;
         `;
 
         const result = await client.query(query);

@@ -97,17 +97,29 @@ const FormFour = ({ onNext, onPrev, onDataChange, formData }) => {
         <div className="md:col-span-2">
           <h3 className="text-lg font-medium border-b pb-2 mb-2">Scanned Image</h3>
         </div>
-        {["image_id", "grantha_id", "image_url", "capture_date"].map((field) => (
+        {["image_id", "grantha_id", "capture_date"].map((field) => (
           <div key={field}>
             <label className="block font-medium capitalize">{field.includes("image_url") ? "Upload Image" : field.replace(/_/g, " ")}:</label>
             <input
               type={field.includes("date") ? "date" : field.includes("id") ? "number" : "file"}
               className="w-full border p-2 rounded"
-              ref={field === "image_url" ? fileInputRef : null} // Attach ref only to file input
+              // ref={field === "image_url" ? fileInputRef : null} // Attach ref only to file input
+              value={localFormData.scannedimage?.[field] || ""}
               onChange={(e) => handleChange(e, "scannedimage", field)}
             />
           </div>
         ))}
+          {/* keeping the image_url separate as it is a file */}
+          <div>
+            <label className="block font-medium capitalize">Upload Image</label>
+            <input
+              type='file'
+              className="w-full border p-2 rounded"
+              ref={fileInputRef} // Attach ref only to file input
+              // value={localFormData.scannedimage?.[field] || ""}
+              onChange={(e) => handleChange(e, "scannedimage", 'image_url')}
+            />
+          </div>
 
         {/* Digital File */}
         <div className="md:col-span-2">

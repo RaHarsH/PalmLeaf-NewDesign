@@ -9,9 +9,14 @@ import FormSix from '@/app/_components/FormSix';
 import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import FormPreview from '@/app/_components/FormPreview';
+import Link from 'next/link';
 
 const Page = () => {
   const [step, setStep] = useState(1);
+
+  const [showPreview, setShowPreview] = useState(false);
+
   const [formData, setFormData] = useState({
     form1: {
       language: { language_id: null, language_name: "" },
@@ -77,6 +82,10 @@ const Page = () => {
   return (
     <div className='w-full h-[90vh] mt-20'>
       <h1 className='text-2xl font-bold text-center'>Data Management</h1>
+
+      {/* link to view data page (temporary) */}
+      <Link href={`/admin/dashboard/dataManagement/viewData`}>View Data</Link>
+
       <div className="w-full h-[90vh] flex flex-col items-center mt-10">
 
         {/* Step Rendering */}
@@ -88,13 +97,18 @@ const Page = () => {
         {step === 5 && <FormFive onNext={nextStep} onPrev={prevStep} onDataChange={(data) => handleDataChange("form5", data)} formData={formData.form5} />}
         {step === 6 && <FormSix onPrev={prevStep} onDataChange={(data) => handleDataChange("form6", data)} formData={formData.form6} />}
         
+        { showPreview &&
+          <FormPreview formData={formData} onConfirm={handleSubmit} onCancel={() => setShowPreview(false)}/>
+          
+        }
+
         {/* Navigation Buttons */}
 
 
         <div className="mt-5 flex gap-5">
           {step > 1 && <button onClick={prevStep} className="px-4 py-2 bg-gray-500 text-white rounded">Prev</button>}
           {step < 6 && <button onClick={nextStep} className="px-4 py-2 bg-blue-500 text-white rounded">Next</button>}
-          {step === 6 && <button onClick={handleSubmit} className="px-4 py-2 bg-green-500 text-white rounded">Submit</button>}
+          {step === 6 && <button onClick={() => setShowPreview(true)} className="px-4 py-2 bg-green-500 text-white rounded">Submit</button>}
         </div>
       </div>
     </div>

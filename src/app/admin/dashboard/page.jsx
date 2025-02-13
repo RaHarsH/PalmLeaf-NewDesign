@@ -39,22 +39,45 @@ export default function AdminDashboardPage() {
   }, [router]);
 
 
-  if (loading) return 
-  <>
-  <div className="h-[80vh] w-full flex justify-center items-center">
-    <p className="text-center text-lg">Loading...</p>;
-  </div>
-  </> 
-  
+  if (loading)
+    return (
+      <div className="h-screen w-full flex justify-center items-center bg-gradient-to-br from-gray-100 to-blue-200">
+        <p className="text-center text-lg font-semibold text-gray-700">
+          Loading...
+        </p>
+      </div>
+    );
 
   return (
-    <div className="container h-[80vh] w-full flex flex-col justify-center items-center mx-auto p-4 max-w-3xl mt-14">
-      <h1 className="text-4xl sm:text-5xl font-bold text-center mb-6">Admin Dashboard</h1>
-      <div className="flex flex-col justify-center gap-8 mb-6 mt-10 font-semibold">
-        <button className={`px-5 py-4 rounded-xl text-2xl ${activeSection === "addUsers" ? "bg-blue-500 text-white" : "bg-gray-300"}`} onClick={() => setActiveSection("addUsers")}>
+    <div className="h-screen flex flex-col justify-center items-center bg-gradient-to-br from-gray-100 to-blue-200 p-6">
+      {/* Dashboard Title */}
+      <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-800 mb-8 drop-shadow-lg">
+        Admin Dashboard
+      </h1>
+
+      {/* Glassmorphic Card Container */}
+      <div className="w-full max-w-lg p-8 bg-white/50 backdrop-blur-lg shadow-xl rounded-3xl border border-gray-300 flex flex-col items-center gap-6">
+        {/* User Management Button */}
+        <button
+          className={`w-full py-4 rounded-xl text-xl font-semibold transition-all duration-300 ${
+            activeSection === "addUsers"
+              ? "bg-blue-500 text-white shadow-lg"
+              : "bg-white text-gray-800 border border-gray-300 hover:bg-blue-100"
+          }`}
+          onClick={() => setActiveSection("addUsers")}
+        >
           <Link href="/admin/dashboard/userManagement">User Management</Link>
         </button>
-        <button className={`px-5 py-4 rounded-xl text-2xl ${activeSection === "dataManagement" ? "bg-blue-500 text-white" : "bg-gray-300"}`} onClick={() => setActiveSection("dataManagement")}>
+
+        {/* Data Management Button */}
+        <button
+          className={`w-full py-4 rounded-xl text-xl font-semibold transition-all duration-300 ${
+            activeSection === "dataManagement"
+              ? "bg-blue-500 text-white shadow-lg"
+              : "bg-white text-gray-800 border border-gray-300 hover:bg-blue-100"
+          }`}
+          onClick={() => setActiveSection("dataManagement")}
+        >
           <Link href="/admin/dashboard/dataManagement">Data Management</Link>
         </button>
       </div>

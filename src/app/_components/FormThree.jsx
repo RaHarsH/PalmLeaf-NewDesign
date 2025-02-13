@@ -221,6 +221,16 @@ const FormThree = ({ onNext, onPrev, onDataChange, formData }) => {
         </div>
 
         <div>
+          <label className="block font-medium">Grantha ID:</label>
+          <input
+            type="number"
+            className="w-full border p-2 rounded"
+            value={localFormData.conservationhistory?.grantha_id || ""}
+            onChange={(e) => handleChange(e, "conservationhistory", "grantha_id")}
+          />
+        </div>
+
+        <div>
           <label className="block font-medium">Conservation Date:</label>
           <input
             type="date"
