@@ -6,11 +6,11 @@ import fragment from '../shaders/fragmentShader.glsl';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
-import AnimatedAboutSection from '@/components/About';
-import MagneticEffect from '@/components/MagneticEffect';
-import Features from '@/components/Features';
-import ParallaxContributors from '@/components/ContributorsSection';
-import AnimatedFooter from '@/components/Footer';
+import AnimatedAboutSection from '../components/About';
+import MagneticEffect from '../components/MagneticEffect';
+import Features from '../components/Features';
+import ParallaxContributors from '../components/ContributorsSection';
+import AnimatedFooter from '../components/Footer';
 
 gsap.registerPlugin(ScrollTrigger);
 

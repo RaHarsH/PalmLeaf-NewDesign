@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import ToasterClient from "@/components/ToastClient";
+import Navbar from "../components/Navbar";
+import ToasterClient from "../components/ToastClient";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
